@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GDG Login – Challenge N:01</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f8fc;--surface:#fff;--text:#1f1f1f;--muted:#5f6368;--line:#dadce0;--blue:#4285F4;--red:#EA4335;--yellow:#FBBC04;--green:#34A853;--blue-d:#1a73e8;--input:#fff;--shadow:0 8px 30px rgba(60,64,67,.15);
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121317;--surface:#1e1f24;--text:#e8eaed;--muted:#9aa0a6;--line:#3c4043;--input:#26272d;--blue-d:#669df6;--shadow:0 8px 30px rgba(0,0,0,.5)}}
+:root[data-theme="dark"]{--bg:#121317;--surface:#1e1f24;--text:#e8eaed;--muted:#9aa0a6;--line:#3c4043;--input:#26272d;--blue-d:#669df6;--shadow:0 8px 30px rgba(0,0,0,.5)}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 Roboto,system-ui,sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:24px 20px 60px}
+h1{font-size:28px;margin:8px 0 4px}h2{font-size:20px;margin:40px 0 12px}h3{font-size:16px;margin:0 0 8px}
+p.sub{color:var(--muted);margin:0}
+.dots{display:inline-flex;gap:5px}.dots i{width:12px;height:12px;border-radius:50%;display:block}
+.dots i:nth-child(1){background:var(--blue)}.dots i:nth-child(2){background:var(--red)}.dots i:nth-child(3){background:var(--yellow)}.dots i:nth-child(4){background:var(--green)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:14px}
+.step.ok{border-color:var(--green);color:var(--green)}.arr{color:var(--muted)}
+.tag{display:inline-block;font-size:12px;font-weight:500;padding:2px 10px;border-radius:999px;color:#fff;margin-bottom:8px}
+.wf{display:grid;grid-template-columns:1fr 1fr;border:2px dashed var(--muted);border-radius:12px;min-height:230px;overflow:hidden}
+.wf>div{padding:16px;display:flex;flex-direction:column;gap:8px;justify-content:center}
+.wf .l{border-right:2px dashed var(--muted);align-items:flex-start}
+.bar{height:12px;border-radius:6px;background:var(--line)}.bar.b{height:30px;border:2px solid var(--muted);background:none;border-radius:8px}.bar.btn{background:var(--muted);height:30px;border-radius:8px}
+.sw{display:flex;gap:10px;flex-wrap:wrap}.sw div{flex:1;min-width:90px;border-radius:12px;padding:30px 10px 8px;color:#fff;font-size:12px}
+table{border-collapse:collapse;width:100%;font-size:14px}td,th{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
+.ctrl{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.ctrl button,.seg{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:999px;padding:7px 16px;cursor:pointer;transition:.15s}
+.ctrl button:hover{border-color:var(--blue);color:var(--blue-d)}.ctrl button[aria-pressed=true]{background:var(--blue);border-color:var(--blue);color:#fff}
+.stage{background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:20px;display:flex;justify-content:center;overflow-x:auto}
+.screen{width:100%;max-width:880px;background:var(--surface);border-radius:24px;box-shadow:var(--shadow);overflow:hidden;display:grid;grid-template-columns:1fr 1fr;transition:max-width .25s}
+.screen.mobile{max-width:380px;grid-template-columns:1fr}
+.hero{padding:36px 32px;background:linear-gradient(160deg,var(--blue-d),#1a56c4 70%);color:#fff;display:flex;flex-direction:column;gap:18px;justify-content:space-between}
+:root[data-theme="dark"] .hero,:root:not([data-theme="light"]) .hero{--x:0}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px}
+.logo .dots i{width:14px;height:14px;box-shadow:0 0 0 2px rgba(255,255,255,.9)}
+.hero h2{margin:0;font-size:30px;line-height:1.2}.hero p{margin:6px 0 0;opacity:.9}
+.proj{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.proj div{background:rgba(255,255,255,.14);border-radius:12px;padding:10px 12px;font-size:13px;transition:.15s}
+.proj div:hover{background:rgba(255,255,255,.26);transform:translateY(-2px)}
+.proj b{display:block;font-size:20px}
+.screen.mobile .hero{padding:22px;gap:12px}.screen.mobile .hero h2{font-size:22px}.screen.mobile .proj{grid-template-columns:repeat(2,1fr)}
+.form{padding:36px 32px;display:flex;flex-direction:column;gap:14px;justify-content:center}
+.screen.mobile .form{padding:24px 22px}
+.form h2{margin:0;font-size:24px}.form .sub{margin:-8px 0 0;color:var(--muted);font-size:14px}
+label{font-size:13px;font-weight:500;display:block;margin-bottom:4px}
+.field{position:relative}
+input[type=email],input[type=password],input[type=text]{width:100%;font:inherit;font-size:16px;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;background:var(--input);color:var(--text);transition:.15s}
+input:hover{border-color:var(--muted)}input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(66,133,244,.25)}
+.eye{position:absolute;right:8px;top:28px;background:none;border:0;color:var(--muted);cursor:pointer;font-size:13px;padding:6px}
+.row{display:flex;justify-content:space-between;align-items:center;font-size:14px;gap:8px}
+a.lnk{color:var(--blue-d);text-decoration:none;font-weight:500;cursor:pointer}a.lnk:hover{text-decoration:underline}
+.primary{font:inherit;font-weight:500;background:var(--blue);color:#fff;border:0;border-radius:10px;padding:13px;cursor:pointer;transition:.15s}
+.primary:hover{background:#1a73e8;box-shadow:0 2px 8px rgba(66,133,244,.45)}.primary:active{transform:scale(.98)}
+.ghost{font:inherit;font-weight:500;background:var(--surface);color:var(--text);border:1.5px solid var(--line);border-radius:10px;padding:12px;cursor:pointer;transition:.15s;display:flex;gap:10px;justify-content:center;align-items:center}
+.ghost:hover{background:var(--bg);border-color:var(--muted)}
+.or{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:13px}.or:before,.or:after{content:"";flex:1;height:1px;background:var(--line)}
+.msg{font-size:13px;color:var(--green);min-height:18px}.err{color:var(--red)}
+.foot{font-size:14px;color:var(--muted);text-align:center}
+.view{display:none;flex-direction:column;gap:14px}.view.on{display:flex}
+@media (max-width:720px){.screen:not(.mobile){grid-template-columns:1fr}.wf{grid-template-columns:1fr}.wf .l{border-right:0;border-bottom:2px dashed var(--muted)}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<span class="dots"><i></i><i></i><i></i><i></i></span>
+<h1>GDG Login – Challenge N:01</h1>
+<p class="sub">UX study → wireframe → final UI, with light/dark theme and a mobile version.</p>
+
+<h2>1 · UX study</h2>
+<div class="card">
+<h3>Main path (happy path)</h3>
+<div class="flow"><span class="step">Open screen</span><span class="arr">→</span><span class="step">See welcome + GDG brand</span><span class="arr">→</span><span class="step">Enter email</span><span class="arr">→</span><span class="step">Enter password</span><span class="arr">→</span><span class="step">Tap Sign in</span><span class="arr">→</span><span class="step ok">Logged in</span></div>
+</div>
+<div class="grid" style="margin-top:14px">
+<div class="card"><span class="tag" style="background:var(--red)">Alt path</span><h3>Forgot password</h3><p class="sub">Link under the password field → enter email → “reset link sent” → back to sign in.</p></div>
+<div class="card"><span class="tag" style="background:var(--green)">Alt path</span><h3>New account</h3><p class="sub">“Create account” link → name, email, password → join the chapter → logged in.</p></div>
+<div class="card"><span class="tag" style="background:var(--yellow);color:#222">Alt path</span><h3>Google sign-in</h3><p class="sub">One-tap “Continue with Google” skips the form for members who prefer it.</p></div>
+<div class="card"><span class="tag" style="background:var(--blue)">Error path</span><h3>Wrong details</h3><p class="sub">Inline message under the field, input keeps its value, focus returns to the problem field.</p></div>
+</div>
+
+<h2>2 · Wireframe &amp; style choices</h2>
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+<div class="wf">
+<div class="l"><div class="bar" style="width:40%"></div><div class="bar" style="width:85%;height:20px"></div><div class="bar" style="width:70%"></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%"><div class="bar b"></div><div class="bar b"></div></div></div>
+<div><div class="bar" style="width:50%;height:16px"></div><div class="bar b"></div><div class="bar b"></div><div class="bar" style="width:40%;align-self:flex-end"></div><div class="bar btn"></div><div class="bar" style="width:60%;align-self:center"></div></div>
+</div>
+<div class="card">
+<h3>Brand colors</h3>
+<div class="sw"><div style="background:#4285F4">Blue<br>#4285F4<br>Primary</div><div style="background:#EA4335">Red<br>#EA4335<br>Errors</div><div style="background:#FBBC04;color:#222">Yellow<br>#FBBC04<br>Accent</div><div style="background:#34A853">Green<br>#34A853<br>Success</div></div>
+<h3 style="margin-top:14px">Type scale (Roboto)</h3>
+<table><tr><td>Hero title</td><td>30 / 36 · Bold</td></tr><tr><td>Form title</td><td>24 / 30 · Bold</td></tr><tr><td>Body &amp; inputs</td><td>16 / 24 · Regular</td></tr><tr><td>Labels, links</td><td>14 / 20 · Medium</td></tr><tr><td>Helper text</td><td>13 / 18 · Regular</td></tr></table>
+<p class="sub" style="margin-top:10px;font-size:14px">Spacing on an 8px grid (8 / 14 / 18 / 32), radius 10px for fields, 24px for the card.</p>
+</div>
+</div>
+
+<h2>3 · Final UI</h2>
+<div class="ctrl">
+<button id="bTheme" aria-pressed="false">☾ Dark theme</button>
+<button id="bDev" aria-pressed="false">📱 Mobile view</button>
+</div>
+<div class="stage">
+<div class="screen" id="screen">
+<aside class="hero">
+<div class="logo"><span class="dots"><i></i><i></i><i></i><i></i></span>Google Developer Groups</div>
+<div><h2>Welcome back, builder.</h2><p>Sign in to join events, share projects and learn with your local community.</p></div>
+<div class="proj"><div><b>120+</b>Events a year</div><div><b>45</b>Open projects</div><div><b>3.2k</b>Members</div><div><b>18</b>Study jams</div></div>
+</aside>
+<main class="form">
+<section class="view on" id="v-in">
+<h2>Sign in</h2><p class="sub">Use your GDG account to continue.</p>
+<div><label for="em">Email</label><input id="em" type="email" placeholder="you@example.com" autocomplete="email"></div>
+<div class="field"><label for="pw">Password</label><input id="pw" type="password" placeholder="••••••••" autocomplete="current-password"><button class="eye" id="eye" type="button">Show</button></div>
+<div class="row"><label style="margin:0;font-weight:400"><input type="checkbox" style="accent-color:#4285F4"> Remember me</label><a class="lnk" data-go="v-fg">Forgot password?</a></div>
+<div class="msg err" id="m-in" role="alert"></div>
+<button class="primary" id="go">Sign in</button>
+<div class="or">or</div>
+<button class="ghost" type="button"><svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.800 2.400 30.300 0 24 0 14.600 0 6.500 5.400 2.600 13.200l7.900 6.100C12.400 13.600 17.700 9.500 24 9.500z"/><path fill="#4285F4" d="M46.500 24.500c0-1.600-.1-3.100-.4-4.500H24v9h12.700c-.6 3-2.300 5.500-4.800 7.200l7.600 5.900c4.400-4.100 7-10.100 7-17.600z"/><path fill="#FBBC04" d="M10.500 28.700A14.500 14.500 0 0 1 9.500 24c0-1.600.3-3.200.8-4.700l-7.900-6.100A24 24 0 0 0 0 24c0 3.900.9 7.500 2.600 10.800l7.900-6.100z"/><path fill="#34A853" d="M24 48c6.500 0 11.900-2.100 15.900-5.800l-7.600-5.900c-2.100 1.400-4.900 2.300-8.300 2.300-6.300 0-11.600-4.100-13.500-9.800l-7.900 6.100C6.500 42.600 14.600 48 24 48z"/></svg>Continue with Google</button>
+<p class="foot">New to GDG? <a class="lnk" data-go="v-su">Create account</a></p>
+</section>
+<section class="view" id="v-fg">
+<h2>Reset password</h2><p class="sub">We’ll email you a link to choose a new one.</p>
+<div><label for="em2">Email</label><input id="em2" type="email" placeholder="you@example.com"></div>
+<div class="msg" id="m-fg" role="status"></div>
+<button class="primary" id="send">Send reset link</button>
+<p class="foot"><a class="lnk" data-go="v-in">← Back to sign in</a></p>
+</section>
+<section class="view" id="v-su">
+<h2>Join GDG</h2><p class="sub">Create your account in under a minute.</p>
+<div><label for="nm">Full name</label><input id="nm" type="text" placeholder="Your name"></div>
+<div><label for="em3">Email</label><input id="em3" type="email" placeholder="you@example.com"></div>
+<div><label for="pw3">Password</label><input id="pw3" type="password" placeholder="At least 8 characters"></div>
+<div class="msg" id="m-su" role="status"></div>
+<button class="primary" id="mk">Create account</button>
+<p class="foot">Already a member? <a class="lnk" data-go="v-in">Sign in</a></p>
+</section>
+</main>
+</div>
+</div>
+<p class="sub" style="margin-top:12px;font-size:14px">Try it: toggle the theme and mobile view, open “Forgot password?” or “Create account”, hover the buttons and cards.</p>
+</div>
+<script>
+(function(){
+var root=document.documentElement,$=function(i){return document.getElementById(i)};
+var dark=matchMedia("(prefers-color-scheme: dark)").matches;
+function applyTheme(){root.setAttribute("data-theme",dark?"dark":"light");$("bTheme").textContent=dark?"☀ Light theme":"☾ Dark theme";$("bTheme").setAttribute("aria-pressed",dark)}
+applyTheme();
+$("bTheme").onclick=function(){dark=!dark;applyTheme()};
+$("bDev").onclick=function(){var m=$("screen").classList.toggle("mobile");this.setAttribute("aria-pressed",m);this.textContent=m?"🖥 Desktop view":"📱 Mobile view"};
+document.querySelectorAll("[data-go]").forEach(function(a){a.onclick=function(){document.querySelectorAll(".view").forEach(function(v){v.classList.remove("on")});$(a.dataset.go).classList.add("on")}});
+$("eye").onclick=function(){var p=$("pw"),s=p.type==="password";p.type=s?"text":"password";this.textContent=s?"Hide":"Show"};
+var ok=function(e){return /^\S+@\S+\.\S+$/.test(e)};
+$("go").onclick=function(){var m=$("m-in");m.className="msg err";
+if(!ok($("em").value)){m.textContent="Enter a valid email address.";$("em").focus();return}
+if($("pw").value.length<8){m.textContent="Password must be at least 8 characters.";$("pw").focus();return}
+m.className="msg";m.textContent="✓ Signed in. Redirecting to your dashboard…"};
+$("send").onclick=function(){var m=$("m-fg");m.className="msg err";if(!ok($("em2").value)){m.textContent="Enter a valid email address.";return}m.className="msg";m.textContent="✓ Reset link sent. Check your inbox."};
+$("mk").onclick=function(){var m=$("m-su");m.className="msg err";
+if(!$("nm").value.trim()){m.textContent="Tell us your name.";return}
+if(!ok($("em3").value)){m.textContent="Enter a valid email address.";return}
+if($("pw3").value.length<8){m.textContent="Use at least 8 characters.";return}
+m.className="msg";m.textContent="✓ Welcome to GDG! Account created."};
+})();
+</script>
+</body>
+</html>
